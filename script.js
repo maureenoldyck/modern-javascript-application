@@ -2,7 +2,6 @@
 //TODO: Function for weather icon
 //TODO: Function for timezone
 //TODO: Function for accordions
-//TODO: Function for chart
 
 
 
@@ -15,12 +14,18 @@
     const content = document.querySelector(".collapsButton").nextElementSibling;
     let canvas = document.querySelector(".temp-info").nextElementSibling;
     const weatherText = document.querySelector(".weather-image").nextElementSibling;
-    let  currentWeather;
+    let temperatureChart = document.querySelector("#tempChart").getContext('2d');
+    let currentWeather;
+    // Arrays to make graph 
+    let hourArray = []; // x-as
+    let tempArray = []; // y-as
+    let precipitationArray = []; // y-as   
     let chart;
 
 
 
 
+    // Script for animations (add class for specific description) & for the weather texts
 
     const displayWeatherTextAndAnimation = () => {
 
@@ -35,7 +40,7 @@
                 document.querySelector(".weather-text").innerHTML = "";
                 document.querySelector("img").classList.add("snow");
                 document.querySelector(".weather-text").innerHTML = "Hello there, it's snowing! The perfect moment to cosy up with a loved one, a thick blanket and hot chocolate!"
-
+                break;
 
             case "Snow":
                 document.querySelector(".weather-text").innerHTML = "";
@@ -58,6 +63,68 @@
                 break;
         }
     };
+
+
+
+    const createChart = () => {
+
+        // Data for chart
+        chart = new Chart(temperatureChart, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: "Chance of Precipitation in %",
+                    data: precipitationArray,
+                    order: 1,
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHitRadius: 10,
+                }, {
+                    label: "Temperature in °C",
+                    fill: false,
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHitRadius: 10,
+                    data: tempArray,
+                    type: 'line',
+                    order: 2,
+                }],
+                labels: hourArray,
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            drawOnChartArea: false,
+                            tickMarkLength: false,
+                            drawBorder: false,
+                        }
+                    }],
+
+                    yAxes: [{
+                        display: false,
+                    }],
+                    ticks: [{
+                        beginAtZero: true,
+                    }]
+                },
+
+                legend: {
+                    display: false
+                },
+            }
+        });
+    }
+
+
+const emptyArray = (element) => {
+element.splice(0, element.length);
+}
 
 
 
@@ -124,9 +191,9 @@
                         document.querySelector(".lowest").innerHTML = "<i class='fas fa-caret-down'></i> " + Math.round(weatherInfo.main.temp_min) + "°C";
                         document.querySelector(".weather-image").src = "images/" + weatherInfo.weather[0].main.toLowerCase() + ".png";
 
-                        // Script for animations (add class for specific description) & for the weather texts
                         currentWeather = weatherInfo.weather[0].main;
                         displayWeatherTextAndAnimation();
+
 
 
 
@@ -163,6 +230,7 @@
                 ((response) => {
                     response.json().then((forecastInfo => {
 
+
                         let dayArray = [];
 
                         for (let i = 0; i < forecastInfo.list.length; i++) {
@@ -190,73 +258,25 @@
                         document.querySelector(".inFiveDaysTemperature").innerHTML = Math.round(dayArray[4].main.temp) + "°C";
                         document.querySelector(".weather-icon-inFiveDays").src = "./images/" + dayArray[4].weather[0].main.toLowerCase() + ".png";
 
-
-                        // Arrays to make graph 
-                        let hourArray = []; // x-as
-                        let tempArray = []; // y-as
-                        let precipitationArray = []; // y-as 
-
                         // Loop to get the next 24 hours
+
+                        emptyArray(hourArray);
+                        emptyArray(tempArray);
+                        emptyArray(precipitationArray);
+
                         for (let i = 0; i < 9; i++) {
-                            hourArray.push((new Date(forecastInfo.list[i].dt_txt)).getHours() + ":00");
-                            tempArray.push((forecastInfo.list[i].main.temp));
+                            hourArray.push(new Date(forecastInfo.list[i].dt_txt).getHours() + ":00");
+                            tempArray.push(forecastInfo.list[i].main.temp);
                             precipitationArray.push((forecastInfo.list[i].pop * 100));
                         };
 
-                        // Data for chart
-                        let temperatureChart = document.querySelector("#tempChart").getContext('2d');
-                        chart = new Chart(temperatureChart, {
-                            type: 'bar',
-                            data: {
-                                datasets: [{
-                                    label: "Chance of Precipitation in %",
-                                    data: precipitationArray,
-                                    order: 1,
-                                    pointBorderColor: "rgba(75,192,192,1)",
-                                    pointBackgroundColor: "#fff",
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHitRadius: 10,
-                                }, {
-                                    label: "Temperature in °C",
-                                    fill: false,
-                                    borderColor: "rgba(75, 192, 192, 1)",
-                                    pointBorderColor: "rgba(75,192,192,1)",
-                                    pointBackgroundColor: "#fff",
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHitRadius: 10,
-                                    data: tempArray,
-                                    type: 'line',
-                                    order: 2,
-                                }],
-                                labels: hourArray,
-                            },
-                            options: {
-                                scales: {
-                                    xAxes: [{
-                                        gridLines: {
-                                            drawOnChartArea: false,
-                                            tickMarkLength: false,
-                                            drawBorder: false,
-                                        }
-                                    }],
+                        createChart();
 
-                                    yAxes: [{
-                                        display: false,
-                                    }],
-                                    ticks: [{
-                                        beginAtZero: true,
-                                    }]
-                                },
-
-                                legend: {
-                                    display: false
-                                },
-                            }
-                        });
 
                     }));
+
+
+
 
                 })
 
