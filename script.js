@@ -1,3 +1,14 @@
+//TODO: Function for chart
+//TODO: Function for weather icon text
+//TODO: Function for weather icon
+//TODO: Function for timezone
+//TODO: Function for accordions
+//TODO: Function for chart
+
+
+
+
+
 (() => {
 
     "use strict";
