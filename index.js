@@ -1,171 +1,24 @@
 //TODO: Function for weather icon
-//TODO: Function for timezone
-
-
-
-(() => {
-
-    "use strict";
+    
+    import { displayWeatherTextAndAnimation } from "./src/displayWeatherTextAndAnimation.js";
+    import { accordionFunction } from "./src/accordion.js";
+    import { backgroundColorChange } from "./src/backgroundColor.js";
+    import { createChart } from "./src/createChart.js";
+    import { emptyArray } from "./src/emptyArray.js";
+    
 
     // Declaration of variables 
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const content = document.querySelector(".collapsButton").nextElementSibling;
     let canvas = document.querySelector(".temp-info").nextElementSibling;
     const weatherText = document.querySelector(".weather-image").nextElementSibling;
-    let temperatureChart = document.querySelector("#tempChart").getContext('2d');
     let currentWeather;
     // Arrays to make graph 
     let hourArray = []; // x-as
     let tempArray = []; // y-as
     let precipitationArray = []; // y-as   
-    let chart;
+    let temperatureChart = document.querySelector("#tempChart").getContext("2d");
     let timeSearchLocation;
-
-
-
-
-    // FUNCTIONS 
-
-    // Script for animations (add class for specific description) & for the weather texts
-
-    const displayWeatherTextAndAnimation = ((element) => {
-
-        switch (element) {
-            case "Clouds":
-                document.querySelector(".weather-text").innerHTML = "";
-                document.querySelector("img").classList.add("cloud");
-                document.querySelector(".weather-text").innerHTML = "Hello there, it's a cloudy day today. Eventhough the sun might not be shining at the moment, you will always be my sunshine!";
-                break;
-
-            case "Rain":
-                document.querySelector(".weather-text").innerHTML = "";
-                document.querySelector("img").classList.add("snow");
-                document.querySelector(".weather-text").innerHTML = "Hello there, it's snowing! The perfect moment to cosy up with a loved one, a thick blanket and hot chocolate!"
-                break;
-
-            case "Snow":
-                document.querySelector(".weather-text").innerHTML = "";
-                document.querySelector("img").classList.add("rain");
-                document.querySelector("img").style.paddingBottom = "10px";
-                document.querySelector(".weather-text").innerHTML = "Hello there, it's a rainy day today. If you don't like rain, think about the fact that without rain there would be no life. So get out there and enjoy the rain! Don't forget your umbrella!"
-                break;
-
-            case "Clear":
-                document.querySelector(".weather-text").innerHTML = "";
-                document.querySelector("img").classList.add("sun");
-                document.querySelector("img").style.paddingBottom = "20px";
-                document.querySelector(".weather-text").innerHTML = "Hello there, the sun is shining, how nice! Definitely the perfect time to go out and get those Vitamin D! Don't forget to put on sunscreen!";
-                break;
-
-            default:
-                document.querySelector(".weather-text").innerHTML = "";
-                document.querySelector("img").classList.add("cloud");
-                document.querySelector(".weather-text").innerHTML = "Hello there, make the best out of today. I believe in you!"
-                break;
-        }
-    });
-
-    const createChart = () => {
-
-        // Data for chart
-        chart = new Chart(temperatureChart, {
-            type: 'bar',
-            data: {
-                datasets: [{
-                    label: "Chance of Precipitation in %",
-                    data: precipitationArray,
-                    order: 1,
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHitRadius: 10,
-                }, {
-                    label: "Temperature in °C",
-                    fill: false,
-                    borderColor: "rgba(75, 192, 192, 1)",
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHitRadius: 10,
-                    data: tempArray,
-                    type: 'line',
-                    order: 2,
-                }],
-                labels: hourArray,
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            drawOnChartArea: false,
-                            tickMarkLength: false,
-                            drawBorder: false,
-                        }
-                    }],
-
-                    yAxes: [{
-                        display: false,
-                    }],
-                    ticks: [{
-                        beginAtZero: true,
-                    }]
-                },
-
-                legend: {
-                    display: false
-                },
-            }
-        });
-    }
-
-    // To empty arrays
-    const emptyArray = (element) => {
-        element.splice(0, element.length);
-    }
-
-
-    // Collaps/Accordian functions
-    const accordionFunction = (selector, collaps) => {
-
-        document.querySelector(selector).addEventListener("click", () => {
-            document.querySelector(selector).classList.toggle("active");
-            if (document.querySelector(selector).classList.contains("active")) {
-                collaps.style.maxHeight = content.scrollHeight + "px";
-            } else {
-                collaps.style.maxHeight = 0;
-            }
-        });
-
-    };
-
-
-    // Change background color for specific time period of location (if it's night it will be darker)
-    const backgroundColorChange = (time) => {
-
-        time = Number(time);
-
-        if (time > 21) {
-            document.body.style.backgroundColor = "#2B2B2B";
-        } else if (time > 18) {
-            document.body.style.backgroundColor = "#4699C2";
-        } else if (time > 15) {
-            document.body.style.backgroundColor = "#F79C65";
-        } else if (time > 12) {
-            document.body.style.backgroundColor = "#7DABD0";
-        } else if (time > 8) {
-            document.body.style.backgroundColor = "#CFE7EA";
-        } else if (time > 4) {
-            document.body.style.backgroundColor = "#f5cec7";
-        } else {
-            document.body.style.backgroundColor = "#2B2B2B";
-        }
-    };
-
-
-
-
 
 
 
@@ -233,8 +86,6 @@
                         displayWeatherTextAndAnimation(currentWeather);
 
 
-
-
                         // Get current time of location 
                         let currentTimeOffset = (new Date().getTimezoneOffset()) / 60; // Offset in hours
                         let timezone = weatherInfo.timezone; // offset in seconds 
@@ -292,13 +143,10 @@
                             tempArray.push(forecastInfo.list[i].main.temp);
                             precipitationArray.push((forecastInfo.list[i].pop * 100));
                         };
-
-                        createChart();
-
+                        
+                       createChart(temperatureChart, precipitationArray, tempArray, hourArray);
 
                     }));
-
-
 
 
                 })
@@ -319,4 +167,3 @@
 
 
 
-})();
