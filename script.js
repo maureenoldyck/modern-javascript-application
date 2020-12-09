@@ -1,7 +1,5 @@
-//TODO: Function for chart
 //TODO: Function for weather icon
 //TODO: Function for timezone
-//TODO: Function for accordions
 
 
 
@@ -24,12 +22,13 @@
 
 
 
+    // FUNCTIONS 
 
     // Script for animations (add class for specific description) & for the weather texts
 
-    const displayWeatherTextAndAnimation = () => {
+    const displayWeatherTextAndAnimation = ((element) => {
 
-        switch (currentWeather) {
+        switch (element) {
             case "Clouds":
                 document.querySelector(".weather-text").innerHTML = "";
                 document.querySelector("img").classList.add("cloud");
@@ -62,9 +61,7 @@
                 document.querySelector(".weather-text").innerHTML = "Hello there, make the best out of today. I believe in you!"
                 break;
         }
-    };
-
-
+    });
 
     const createChart = () => {
 
@@ -121,12 +118,25 @@
         });
     }
 
+    // To empty arrays
+    const emptyArray = (element) => {
+        element.splice(0, element.length);
+    }
 
-const emptyArray = (element) => {
-element.splice(0, element.length);
-}
 
+    // Collaps/Accordian functions
+    const accordionFunction = (selector, collaps) => {
 
+        document.querySelector(selector).addEventListener("click", () => {
+            document.querySelector(selector).classList.toggle("active");
+            if (document.querySelector(selector).classList.contains("active")) {
+                collaps.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                collaps.style.maxHeight = 0;
+            }
+        });
+
+    };
 
 
 
@@ -192,7 +202,7 @@ element.splice(0, element.length);
                         document.querySelector(".weather-image").src = "images/" + weatherInfo.weather[0].main.toLowerCase() + ".png";
 
                         currentWeather = weatherInfo.weather[0].main;
-                        displayWeatherTextAndAnimation();
+                        displayWeatherTextAndAnimation(currentWeather);
 
 
 
@@ -287,36 +297,13 @@ element.splice(0, element.length);
     });
 
 
-    // Collaps/Accordian functions
 
-    // Header
-    document.querySelector(".collapsButton").addEventListener("click", () => {
-        document.querySelector(".collapsButton").classList.toggle("active");
-        if (document.querySelector(".collapsButton").classList.contains("active")) {
-            content.style.maxHeight = content.scrollHeight + "px";
-        } else {
-            content.style.maxHeight = 0;
-        }
-    });
+    accordionFunction(".collapsButton", content);
+    accordionFunction(".temp-info", canvas);
+    accordionFunction(".weather-image", weatherText);
 
-    // Chart
-    document.querySelector(".temp-info").addEventListener("click", () => {
-        document.querySelector(".temp-info").classList.toggle("active");
-        if (document.querySelector(".temp-info").classList.contains("active")) {
-            canvas.style.maxHeight = content.scrollHeight + "px";
-        } else {
-            canvas.style.maxHeight = 0;
-        }
-    });
 
-    // Sentence of the weather
-    document.querySelector(".weather-image").addEventListener("click", () => {
-        document.querySelector(".weather-image").classList.toggle("active");
-        if (document.querySelector(".weather-image").classList.contains("active")) {
-            weatherText.style.maxHeight = content.scrollHeight + "px";
-        } else {
-            weatherText.style.maxHeight = 0;
-        }
-    });
+
+
 
 })();
