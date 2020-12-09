@@ -13,7 +13,6 @@
     let canvas = document.querySelector(".temp-info").nextElementSibling;
     const weatherText = document.querySelector(".weather-image").nextElementSibling;
     let currentWeather;
-    // Arrays to make graph 
     let hourArray = []; // x-as
     let tempArray = []; // y-as
     let precipitationArray = []; // y-as   
@@ -160,10 +159,7 @@
 
 
     accordionFunction(".collapsButton", content);
-    accordionFunction(".temp-info", canvas);
     accordionFunction(".weather-image", weatherText);
-
-
-
+    accordionFunction(".temp-info", canvas);
 
 

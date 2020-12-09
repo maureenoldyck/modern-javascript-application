@@ -1,9 +1,4 @@
-
-
-
-    const createChart = (chart, precipitation, temperature, hour) => {
-
-
+const createChart = (chart, precipitation, temperature, hour) => {
 
     // Data for chart
     new Chart(chart, {
@@ -56,8 +51,9 @@
             },
         }
     });
-});
+};
 
 
-export { createChart };
-
+export {
+    createChart
+};
