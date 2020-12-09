@@ -19,6 +19,8 @@
     let tempArray = []; // y-as
     let precipitationArray = []; // y-as   
     let chart;
+    let timeSearchLocation;
+
 
 
 
@@ -139,6 +141,32 @@
     };
 
 
+    // Change background color for specific time period of location (if it's night it will be darker)
+    const backgroundColorChange = (time) => {
+
+        time = Number(time);
+
+        if (time > 21) {
+            document.body.style.backgroundColor = "#2B2B2B";
+        } else if (time > 18) {
+            document.body.style.backgroundColor = "#4699C2";
+        } else if (time > 15) {
+            document.body.style.backgroundColor = "#F79C65";
+        } else if (time > 12) {
+            document.body.style.backgroundColor = "#7DABD0";
+        } else if (time > 8) {
+            document.body.style.backgroundColor = "#CFE7EA";
+        } else if (time > 4) {
+            document.body.style.backgroundColor = "#f5cec7";
+        } else {
+            document.body.style.backgroundColor = "#2B2B2B";
+        }
+    };
+
+
+
+
+
 
 
     // Default value based on current location
@@ -212,25 +240,10 @@
                         let timezone = weatherInfo.timezone; // offset in seconds 
                         let offsetSearchLocation = timezone / 3600; // offset in hours
                         let offsetGmt = currentTimeOffset + offsetSearchLocation;
-                        let timeSearchLocation = new Date().getHours() + offsetGmt;
+                        timeSearchLocation = new Date().getHours() + offsetGmt;
 
-                        // Change background color for specific time period of location (if it's night it will be darker)
-                        if (timeSearchLocation > 21) {
-                            document.body.style.backgroundColor = "#2B2B2B";
-                        } else if (timeSearchLocation > 18) {
-                            document.body.style.backgroundColor = "#4699C2";
-                        } else if (timeSearchLocation > 15) {
-                            document.body.style.backgroundColor = "#F79C65";
-                        } else if (timeSearchLocation > 12) {
-                            document.body.style.backgroundColor = "#7DABD0";
-                        } else if (timeSearchLocation > 8) {
-                            document.body.style.backgroundColor = "#CFE7EA";
-                        } else if (timeSearchLocation > 4) {
-                            document.body.style.backgroundColor = "#f5cec7";
-                        } else {
-                            document.body.style.backgroundColor = "#2B2B2B";
-                        }
-
+                        backgroundColorChange(timeSearchLocation);
+                        
                     }))
                 }));
 
