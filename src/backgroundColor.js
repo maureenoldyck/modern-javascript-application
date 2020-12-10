@@ -1,6 +1,13 @@
-const backgroundColorChange = (time) => {
+const backgroundColorChange = (data) => {
 
-    time = Number(time);
+    let currentTimeOffset = (new Date().getTimezoneOffset()) / 60; // Offset in hours
+    let timezone = data.timezone; // offset in seconds 
+    let offsetSearchLocation = timezone / 3600; // offset in hours
+    let offsetGmt = currentTimeOffset + offsetSearchLocation;
+    let timeSearchLocation = new Date().getHours() + offsetGmt;
+
+
+    let time = Number(timeSearchLocation);
 
     if (time > 21) {
         document.body.style.backgroundColor = "#2B2B2B";

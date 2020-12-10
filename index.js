@@ -54,15 +54,8 @@
 
                         currentWeather = weatherInfo.weather[0].main;
                         displayWeatherTextAndAnimation(currentWeather);
-
-                        // Get current time of location 
-                        let currentTimeOffset = (new Date().getTimezoneOffset()) / 60; // Offset in hours
-                        let timezone = weatherInfo.timezone; // offset in seconds 
-                        let offsetSearchLocation = timezone / 3600; // offset in hours
-                        let offsetGmt = currentTimeOffset + offsetSearchLocation;
-                        timeSearchLocation = new Date().getHours() + offsetGmt;
-
-                        backgroundColorChange(timeSearchLocation);
+                        
+                        backgroundColorChange(weatherInfo);
                         
                     }))
                 }));
