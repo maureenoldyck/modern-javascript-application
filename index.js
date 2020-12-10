@@ -7,6 +7,7 @@
     import { forecastInformation } from "./src/forecastInfo.js";
     import { weatherInformation } from "./src/weatherInformation.js";
     import { chartInfo } from "./src/chartInfo.js";
+    import { forecastArray } from "./src/forecastArray.js";
     
 
     // Declaration of variables 
@@ -17,6 +18,7 @@
     let hourArray = []; // x-as
     let tempArray = []; // y-as
     let precipitationArray = []; // y-as   
+    let dayArray = [];
     let temperatureChart = document.querySelector("#tempChart").getContext("2d");
     let timeSearchLocation;
 
@@ -71,31 +73,16 @@
                 ((response) => {
                     response.json().then((forecastInfo => {
 
-                        let dayArray = [];
-
-                        for (let i = 0; i < forecastInfo.list.length; i++) {
-                            let day = (new Date(forecastInfo.list[i].dt_txt));
-                            if (day.getHours() === 12) {
-                                dayArray.push(forecastInfo.list[i]);
-                            };
-                        };
-
+                        forecastArray(forecastInfo, dayArray);
                         forecastInformation(dayArray);
-                       
-                        // Loop to get the next 24 hours
-
                         emptyArray(hourArray);
                         emptyArray(tempArray);
                         emptyArray(precipitationArray);
-
                         chartInfo(forecastInfo, hourArray, tempArray, precipitationArray );
-
+                        createChart(temperatureChart, precipitationArray, tempArray, hourArray);
                         
-                       createChart(temperatureChart, precipitationArray, tempArray, hourArray);
-
                     }));
                 })
-
             );;
 
         // Make search bar disappear again after search 
