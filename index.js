@@ -5,7 +5,8 @@
     import { createChart } from "./src/createChart.js";
     import { emptyArray } from "./src/emptyArray.js";
     import { locationFunction } from "./src/locationFunction.js";
-    import { forecastInformation } from "./src/forecastInfo.js"
+    import { forecastInformation } from "./src/forecastInfo.js";
+    import { weatherInformation } from "./src/weatherInformation.js";
     
 
     // Declaration of variables 
@@ -48,12 +49,7 @@
                 ((response) => {
                     response.json().then((weatherInfo => {
 
-                        document.querySelector(".temperature").innerHTML = Math.round(weatherInfo.main.temp) + "°C";
-                        document.querySelector(".city-name").innerHTML = weatherInfo.name + ", " + weatherInfo.sys.country;
-                        document.querySelector(".description").innerHTML = weatherInfo.weather[0].main;
-                        document.querySelector(".highest").innerHTML = "<i class='fas fa-caret-up'></i> " + Math.round(weatherInfo.main.temp_max) + "°C";
-                        document.querySelector(".lowest").innerHTML = "<i class='fas fa-caret-down'></i> " + Math.round(weatherInfo.main.temp_min) + "°C";
-                        document.querySelector(".weather-image").src = "images/" + weatherInfo.weather[0].main.toLowerCase() + ".png";
+                       weatherInformation(weatherInfo);
 
                         currentWeather = weatherInfo.weather[0].main;
                         displayWeatherTextAndAnimation(currentWeather);
@@ -75,7 +71,6 @@
             .then(
                 ((response) => {
                     response.json().then((forecastInfo => {
-
 
                         let dayArray = [];
 
