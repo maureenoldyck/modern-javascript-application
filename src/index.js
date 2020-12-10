@@ -1,16 +1,14 @@
-    import { displayWeatherTextAndAnimation } from "./src/displayWeatherTextAndAnimation.js";
-    import { accordionFunction } from "./src/accordion.js";
-    import { backgroundColorChange } from "./src/backgroundColor.js";
-    import { createChart } from "./src/createChart.js";
-    import { emptyArray } from "./src/emptyArray.js";
-    import { locationFunction } from "./src/locationFunction.js";
-    import { forecastInformation } from "./src/forecastInfo.js";
-    import { weatherInformation } from "./src/weatherInformation.js";
-    import { chartInfo } from "./src/chartInfo.js";
-    import { forecastArray } from "./src/forecastArray.js";
-    
+    import { displayWeatherTextAndAnimation } from "./displayWeatherTextAndAnimation.js";
+    import { accordionFunction } from "./accordion.js";
+    import { backgroundColorChange } from "./backgroundColor.js";
+    import { createChart } from "./createChart.js";
+    import { emptyArray } from "./emptyArray.js";
+    import { locationFunction } from "./locationFunction.js";
+    import { forecastInformation } from "./forecastInfo.js";
+    import { weatherInformation } from "./weatherInformation.js";
+    import { chartInfo } from "./chartInfo.js";
+    import { forecastArray } from "./forecastArray.js";
 
-    // Declaration of variables 
     const content = document.querySelector(".collapsButton").nextElementSibling;
     let canvas = document.querySelector(".temp-info").nextElementSibling;
     const weatherText = document.querySelector(".weather-image").nextElementSibling;
@@ -21,8 +19,6 @@
     let dayArray = [];
     let temperatureChart = document.querySelector("#tempChart").getContext("2d");
 
-
-    // Default value based on current location
     window.addEventListener("load", () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -35,8 +31,6 @@
         };
     });
 
-
-    // Event listener to get input value, create the api link and fetch the data
     document.querySelector("#run").addEventListener("click", () => {
         event.preventDefault();
         const cityName = document.querySelector("#city").value;
@@ -49,14 +43,12 @@
                 ((response) => {
                     response.json().then((weatherInfo => {
 
-                       weatherInformation(weatherInfo);
-                       backgroundColorChange(weatherInfo);
-
+                        weatherInformation(weatherInfo);
+                        backgroundColorChange(weatherInfo);
 
                         currentWeather = weatherInfo.weather[0].main;
                         displayWeatherTextAndAnimation(currentWeather);
-                        
-                        
+                                         
                     }))
                 }));
 
@@ -85,5 +77,3 @@
     accordionFunction(".collapsButton", content);
     accordionFunction(".weather-image", weatherText);
     accordionFunction(".temp-info", canvas);
-
-
