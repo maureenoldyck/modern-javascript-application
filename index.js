@@ -20,7 +20,6 @@
     let precipitationArray = []; // y-as   
     let dayArray = [];
     let temperatureChart = document.querySelector("#tempChart").getContext("2d");
-    let timeSearchLocation;
 
 
     // Default value based on current location
@@ -51,11 +50,12 @@
                     response.json().then((weatherInfo => {
 
                        weatherInformation(weatherInfo);
+                       backgroundColorChange(weatherInfo);
+
 
                         currentWeather = weatherInfo.weather[0].main;
                         displayWeatherTextAndAnimation(currentWeather);
                         
-                        backgroundColorChange(weatherInfo);
                         
                     }))
                 }));
