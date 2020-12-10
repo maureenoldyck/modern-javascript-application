@@ -1,3 +1,5 @@
+import _ from 'lodash';
+    
     import { displayWeatherTextAndAnimation } from "./displayWeatherTextAndAnimation.js";
     import { accordionFunction } from "./accordion.js";
     import { backgroundColorChange } from "./backgroundColor.js";
