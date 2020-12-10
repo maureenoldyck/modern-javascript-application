@@ -1,4 +1,3 @@
-    
     import { displayWeatherTextAndAnimation } from "./src/displayWeatherTextAndAnimation.js";
     import { accordionFunction } from "./src/accordion.js";
     import { backgroundColorChange } from "./src/backgroundColor.js";
@@ -7,6 +6,7 @@
     import { locationFunction } from "./src/locationFunction.js";
     import { forecastInformation } from "./src/forecastInfo.js";
     import { weatherInformation } from "./src/weatherInformation.js";
+    import { chartInfo } from "./src/chartInfo.js";
     
 
     // Declaration of variables 
@@ -21,7 +21,6 @@
     let timeSearchLocation;
 
 
-
     // Default value based on current location
     window.addEventListener("load", () => {
         if (navigator.geolocation) {
@@ -33,8 +32,8 @@
                 locationFunction(api);
             });
         };
-
     });
+
 
     // Event listener to get input value, create the api link and fetch the data
     document.querySelector("#run").addEventListener("click", () => {
@@ -89,17 +88,12 @@
                         emptyArray(tempArray);
                         emptyArray(precipitationArray);
 
-                        for (let i = 0; i < 9; i++) {
-                            hourArray.push(new Date(forecastInfo.list[i].dt_txt).getHours() + ":00");
-                            tempArray.push(forecastInfo.list[i].main.temp);
-                            precipitationArray.push((forecastInfo.list[i].pop * 100));
-                        };
+                        chartInfo(forecastInfo, hourArray, tempArray, precipitationArray );
+
                         
                        createChart(temperatureChart, precipitationArray, tempArray, hourArray);
 
                     }));
-
-
                 })
 
             );;
@@ -107,8 +101,6 @@
         // Make search bar disappear again after search 
         content.style.maxHeight = 0;
     });
-
-
 
     accordionFunction(".collapsButton", content);
     accordionFunction(".weather-image", weatherText);

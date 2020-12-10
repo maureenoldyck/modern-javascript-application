@@ -7,8 +7,6 @@ const weatherInformation = (data) => {
     document.querySelector(".lowest").innerHTML = "<i class='fas fa-caret-down'></i> " + Math.round(data.main.temp_min) + "°C";
     document.querySelector(".weather-image").src = "images/" + data.weather[0].main.toLowerCase() + ".png";
 
-
-
 }
 
 export { weatherInformation };
