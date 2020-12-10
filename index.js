@@ -4,11 +4,11 @@
     import { backgroundColorChange } from "./src/backgroundColor.js";
     import { createChart } from "./src/createChart.js";
     import { emptyArray } from "./src/emptyArray.js";
-    import { locationFunction } from "./locationFunction.js";
+    import { locationFunction } from "./src/locationFunction.js";
+    import { forecastInformation } from "./src/forecastInfo.js"
     
 
     // Declaration of variables 
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const content = document.querySelector(".collapsButton").nextElementSibling;
     let canvas = document.querySelector(".temp-info").nextElementSibling;
     const weatherText = document.querySelector(".weather-image").nextElementSibling;
@@ -82,28 +82,12 @@
                         for (let i = 0; i < forecastInfo.list.length; i++) {
                             let day = (new Date(forecastInfo.list[i].dt_txt));
                             if (day.getHours() === 12) {
-
                                 dayArray.push(forecastInfo.list[i]);
                             };
-
                         };
 
-                        document.querySelector(".tomorrow").innerHTML = days[(new Date(dayArray[0].dt_txt)).getDay()];
-                        document.querySelector(".tomorrowTemperature").innerHTML = Math.round(dayArray[0].main.temp) + "°C";
-                        document.querySelector(".weather-icon-tomorrow").src = "./images/" + dayArray[0].weather[0].main.toLowerCase() + ".png";
-                        document.querySelector(".dayAfterTomorrow").innerHTML = days[(new Date(dayArray[1].dt_txt)).getDay()];
-                        document.querySelector(".dayAfterTomorrowTemperature").innerHTML = Math.round(dayArray[1].main.temp) + "°C";
-                        document.querySelector(".weather-icon-dayAfterTomorrow").src = "./images/" + dayArray[1].weather[0].main.toLowerCase() + ".png";
-                        document.querySelector(".inThreeDays").innerHTML = days[(new Date(dayArray[2].dt_txt)).getDay()];
-                        document.querySelector(".inThreeDaysTemperature").innerHTML = Math.round(dayArray[2].main.temp) + "°C";
-                        document.querySelector(".weather-icon-inThreeDays").src = "./images/" + dayArray[2].weather[0].main.toLowerCase() + ".png";
-                        document.querySelector(".inFourDays").innerHTML = days[(new Date(dayArray[3].dt_txt)).getDay()];
-                        document.querySelector(".inFourDaysTemperature").innerHTML = Math.round(dayArray[3].main.temp) + "°C";
-                        document.querySelector(".weather-icon-inFourDays").src = "./images/" + dayArray[3].weather[0].main.toLowerCase() + ".png";
-                        document.querySelector(".inFiveDays").innerHTML = days[(new Date(dayArray[4].dt_txt)).getDay()];
-                        document.querySelector(".inFiveDaysTemperature").innerHTML = Math.round(dayArray[4].main.temp) + "°C";
-                        document.querySelector(".weather-icon-inFiveDays").src = "./images/" + dayArray[4].weather[0].main.toLowerCase() + ".png";
-
+                        forecastInformation(dayArray);
+                       
                         // Loop to get the next 24 hours
 
                         emptyArray(hourArray);
