@@ -59,7 +59,8 @@ import _ from 'lodash';
             .then(
                 ((response) => {
                     response.json().then((forecastInfo => {
-
+                        
+                        emptyArray(dayArray);
                         forecastArray(forecastInfo, dayArray);
                         forecastInformation(dayArray);
                         emptyArray(hourArray);
