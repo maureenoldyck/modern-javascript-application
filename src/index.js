@@ -33,7 +33,7 @@ import _ from 'lodash';
         };
     });
 
-    document.querySelector("#run").addEventListener("click", () => {
+    document.querySelector("#run").addEventListener("click", (event) => {
         event.preventDefault();
         const cityName = document.querySelector("#city").value;
         const weatherToday = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=be4553b34e49d94c654cc1c6eb775c17";
