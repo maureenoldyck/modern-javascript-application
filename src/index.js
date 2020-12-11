@@ -1,27 +1,27 @@
 import _ from 'lodash';
     
-    import { displayWeatherTextAndAnimation } from "./displayWeatherTextAndAnimation.js";
-    import { accordionFunction } from "./accordion.js";
-    import { backgroundColorChange } from "./backgroundColor.js";
-    import { createChart } from "./createChart.js";
-    import { emptyArray } from "./emptyArray.js";
-    import { locationFunction } from "./locationFunction.js";
-    import { forecastInformation } from "./forecastInfo.js";
-    import { weatherInformation } from "./weatherInformation.js";
-    import { chartInfo } from "./chartInfo.js";
-    import { forecastArray } from "./forecastArray.js";
+import { displayWeatherTextAndAnimation } from "./displayWeatherTextAndAnimation.js";
+import { accordionFunction } from "./accordion.js";
+import { backgroundColorChange } from "./backgroundColor.js";
+import { createChart } from "./createChart.js";
+import { emptyArray } from "./emptyArray.js";
+import { locationFunction } from "./locationFunction.js";
+import { forecastInformation } from "./forecastInfo.js";
+import { weatherInformation } from "./weatherInformation.js";
+import { chartInfo } from "./chartInfo.js";
+import { forecastArray } from "./forecastArray.js";
 
-    const content = document.querySelector(".collapsButton").nextElementSibling;
-    let canvas = document.querySelector(".temp-info").nextElementSibling;
-    const weatherText = document.querySelector(".weather-image").nextElementSibling;
-    let currentWeather;
-    let hourArray = []; // x-as
-    let tempArray = []; // y-as
-    let precipitationArray = []; // y-as   
-    let dayArray = [];
-    let temperatureChart = document.querySelector("#tempChart").getContext("2d");
+const content = document.querySelector(".collapsButton").nextElementSibling;
+let canvas = document.querySelector(".temp-info").nextElementSibling;
+const weatherText = document.querySelector(".weather-image").nextElementSibling;
+let currentWeather;
+let hourArray = []; // x-as
+let tempArray = []; // y-as
+let precipitationArray = []; // y-as   
+let dayArray = [];
+let temperatureChart = document.querySelector("#tempChart").getContext("2d");
 
-    window.addEventListener("load", () => {
+window.addEventListener("load", () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 let longitude = position.coords.longitude;
@@ -78,8 +78,8 @@ import _ from 'lodash';
     content.style.maxHeight = 0;
 };
 
-    document.querySelector("#run").addEventListener("click", searchClicked);
+document.querySelector("#run").addEventListener("click", searchClicked);
 
-    accordionFunction(".collapsButton", content);
-    accordionFunction(".weather-image", weatherText);
-    accordionFunction(".temp-info", canvas);
+accordionFunction(".collapsButton", content);
+accordionFunction(".weather-image", weatherText);
+accordionFunction(".temp-info", canvas);
