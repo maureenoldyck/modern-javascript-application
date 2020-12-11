@@ -22,18 +22,18 @@ let dayArray = [];
 let temperatureChart = document.querySelector("#tempChart").getContext("2d");
 
 window.addEventListener("load", () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                let longitude = position.coords.longitude;
-                let latitude = position.coords.latitude;
-                let api = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=current,hourly,minutely&units=metric&appid=be4553b34e49d94c654cc1c6eb775c17";
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let longitude = position.coords.longitude;
+            let latitude = position.coords.latitude;
+            let api = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=current,hourly,minutely&units=metric&appid=be4553b34e49d94c654cc1c6eb775c17";
 
-                locationFunction(api);
-            });
-        };
-    });
+            locationFunction(api);
+        });
+    };
+});
 
-    const searchClicked = (event) => {
+const searchClicked = (event) => {
 
     event.preventDefault();
     const cityName = document.querySelector("#city").value;
@@ -56,7 +56,7 @@ window.addEventListener("load", () => {
             displayWeatherTextAndAnimation(currentWeather);
                                      
         }))
-
+    ;
     // Weather next 5 days 
     fetch(weatherForecast)
         .then((response) => {
@@ -76,10 +76,10 @@ window.addEventListener("load", () => {
             createChart(temperatureChart, precipitationArray, tempArray, hourArray);
                     
         }));
-
+    ;
     // Make search bar disappear again after search 
     content.style.maxHeight = 0;
-    
+
 };
 
 document.querySelector("#run").addEventListener("click", searchClicked);
